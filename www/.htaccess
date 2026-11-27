@@ -1,0 +1,97 @@
+# =====================================================================
+#  Listare modernă de fișiere (Apache mod_autoindex)
+#  Pune acest bloc în .htaccess-ul oricărui folder unde vrei listarea.
+#  Se moștenește automat și în subfoldere.
+# =====================================================================
+
+# Permite doar ip-urile din lista
+#Require ip 192.168.x.x 192.168.y.y
+
+Options +Indexes
+AddDefaultCharset UTF-8
+
+# HTMLTable            -> tabel (pe care scriptul îl transformă în listă)
+# SuppressHTMLPreamble -> header.html conține pagina completă (<html>, <head>…)
+# SuppressIcon         -> nu mai folosim iconurile vechi din /icons/
+IndexOptions FancyIndexing HTMLTable SuppressHTMLPreamble SuppressIcon FoldersFirst NameWidth=* DescriptionWidth=* VersionSort IgnoreCase Charset=UTF-8
+
+# HEADER FILE
+HeaderName /.index_of/header.html
+# FOOTER FILE
+ReadmeName /.index_of/footer.html
+
+# Ascunde fișierele tehnice din listă
+IndexIgnore .index_of .htaccess .htpasswd .ht* .git .DS_Store Thumbs.db desktop.ini
+
+# =====================================================================
+#  Descrieri fișiere
+#  ATENȚIE: Apache caută textul ORIUNDE în nume (".js" se potrivește și
+#  cu ".json"), face diferență între litere mari/mici, iar PRIMA regulă
+#  care se potrivește câștigă. De aceea extensiile lungi/specifice sunt
+#  puse înaintea celor scurte.
+# =====================================================================
+
+# --- Audio ---
+AddDescription "MPEG Layer 3 Format" .mp3 .MP3
+AddDescription "Audio Playlist" .xspf .m3u8 .m3u .pls .aimppl4
+AddDescription "Audio Format" .m4a .wav .flac .ogg .wma .opus
+
+# --- Video ---
+AddDescription "Video Format" .avi .mpg .mpeg .mp4 .MP4 .mkv .flv .mov .MOV .webm .wmv .ts
+
+# --- Arhive (specifice înaintea generale) ---
+AddDescription "GZIP compressed TAR archive" .tar.gz .tgz
+AddDescription "ZIP compressed archive" .zip
+AddDescription "7-Zip compressed archive" .7z
+AddDescription "RAR compressed archive" .rar
+AddDescription "TAR archive" .tar
+AddDescription "GZIP compressed archive" .gz .Z
+
+# --- Imagini ---
+AddDescription "Joint Photographic Experts Group" .jpg .jpeg .jpe .JPG .JPEG
+AddDescription "Graphic Interchange Format" .gif
+AddDescription "Portable Network Graphic" .png .PNG
+AddDescription "Bitmap Picture" .bmp .dib
+AddDescription "Adobe Photoshop document" .psd
+AddDescription "Windows PowerShell script" .ps1
+AddDescription "Vector graphic" .ps .ai .eps
+
+# --- Web / cod ---
+AddDescription "Hypertext Markup Language" .shtml .html .htm
+AddDescription "Cascading Style Sheet" .css
+AddDescription "DocType Definition" .dtd
+AddDescription "Extensible Markup Language" .xml
+AddDescription "JavaScript Object Notation" .json
+AddDescription "JavaScript" .js
+AddDescription "Java code" .java
+AddDescription "PHP: Hypertext Preprocessor source code" .phps
+AddDescription "PHP: Hypertext Preprocessor script" .php
+AddDescription "Common Gateway Interface" .cgi
+AddDescription "Mac OS X shell script" .command
+AddDescription "Unix shell script" .sh .shar .csh .ksh
+AddDescription "Windows batch file" .bat .cmd
+AddDescription "Configuration file" .conf .cfg .ini
+AddDescription "mIRC Scripting Language" .mrc
+
+# --- Documente ---
+AddDescription "Portable Document Format" .pdf
+AddDescription "Microsoft Word document" .docx .doc
+AddDescription "Microsoft Excel document" .xlsx .xls
+AddDescription "Win32 compressed HTML help" .chm
+AddDescription "Optical disk image" .iso .mdx .mds .nrg
+AddDescription "Markdown text file format" .md
+AddDescription "Plain text file" .txt .nfo .diz .faq
+AddDescription "Unix man page" .man
+AddDescription "Email data" .eml .mbox
+AddDescription "Open Document Text" .odt .fodf
+AddDescription "Open Document Spreadsheet" .ods .fods
+
+# --- Diverse ---
+AddDescription "Windows executable file" .exe
+AddDescription "Mac OS X terminal" .term
+AddDescription "BitTorrent file" .torrent
+AddDescription "Windows link" .lnk
+AddDescription "URL web shortcut" .url
+AddDescription "Virtual Network Connection link" .vnc
+
+# Folderele afișează automat „Folder” în coloana Descriere (din script.js).
