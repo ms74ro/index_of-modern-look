@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,10 +23,11 @@
 <body>
 <div class="shell">
   <header class="top">
-    <nav class="crumbs" id="crumbs" aria-label="Cale"></nav>
+    <nav class="crumbs" id="crumbs" aria-label="Path" data-i18n-aria-label="path"></nav>
     <div class="actions">
-      <button type="button" class="iconbtn" id="viewBtn" title="Listă / Grilă" aria-label="Schimbă vizualizarea"></button>
-      <button type="button" class="iconbtn" id="themeBtn" title="Temă" aria-label="Schimbă tema"></button>
+      <button type="button" class="iconbtn txt" id="langBtn" title="Language" aria-label="Language">EN</button>
+      <button type="button" class="iconbtn" id="viewBtn" title="List / Grid" aria-label="Switch view"></button>
+      <button type="button" class="iconbtn" id="themeBtn" title="Theme" aria-label="Switch theme"></button>
     </div>
   </header>
 
@@ -38,17 +39,17 @@
   <div class="toolbar">
     <label class="search">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-      <input type="search" id="filter" placeholder="Caută în acest folder…" autocomplete="off" spellcheck="false">
+      <input type="search" id="filter" placeholder="Search in this folder…" data-i18n-placeholder="search" autocomplete="off" spellcheck="false">
       <kbd>/</kbd>
     </label>
   </div>
 
   <main class="card">
     <div class="list-head" id="listHead">
-      <button type="button" data-sort="name">Nume<span class="arrow"></span></button>
-      <button type="button" data-sort="date">Modificat<span class="arrow"></span></button>
-      <button type="button" data-sort="size">Mărime<span class="arrow"></span></button>
-      <button type="button" data-sort="desc">Descriere<span class="arrow"></span></button>
+      <button type="button" data-sort="name"><span data-i18n="col_name">Name</span><span class="arrow"></span></button>
+      <button type="button" data-sort="date"><span data-i18n="col_date">Modified</span><span class="arrow"></span></button>
+      <button type="button" data-sort="size"><span data-i18n="col_size">Size</span><span class="arrow"></span></button>
+      <button type="button" data-sort="desc"><span data-i18n="col_desc">Description</span><span class="arrow"></span></button>
     </div>
     <div class="list" id="list"></div>
     <div class="empty" id="empty" hidden></div>

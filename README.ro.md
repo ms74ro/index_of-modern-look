@@ -22,6 +22,7 @@ unde vrei.
 - Sortare după nume, dată, mărime sau descriere; folderele sunt mereu primele
 - Coloana **Descriere** după mărime (din `AddDescription` din Apache); folderele afișează simplu „Folder”
 - Temă luminoasă, întunecată sau automată (după sistem) și vizualizare listă / grilă, ambele reținute în browser
+- Interfață în **engleză (implicit)** și română: butonul **EN / RO** din bara de sus o schimbă, iar alegerea este reținută. Adăugarea unei limbi înseamnă un bloc în `script.js`
 - Aspect adaptat la ecrane mici (coloanele Descriere și Dată se ascund pe ecrane înguste)
 - Fără JavaScript rămâne vizibil tabelul original Apache, stilizat
 - Versiunea și copyright-ul apar discret în subsol, deasupra semnăturii serverului Apache
@@ -185,7 +186,7 @@ fișierele statice ale temei.
 
 | Ce | Unde |
 | --- | --- |
-| Textele interfeței (titluri coloane, text căutare, „Folder”, contoare) | `header.html` și `script.js` |
+| Limba și textele interfeței (titluri coloane, text căutare, „Folder”, contoare) | `LANGS` în `script.js`. Limba de la prima vizită este `DEFAULT_LANG` (`'en'` sau `'ro'`); pentru o limbă nouă copiezi un bloc și îl traduci |
 | Culori, culorile iconurilor, lățimea maximă (`.shell`), coloane | `style.css` |
 | Tipurile de fișiere și iconurile lor | `TYPES` și `ICONS` în `script.js` |
 | Versiune și copyright | `footInfo` în `footer.html` |

@@ -6,6 +6,37 @@
   var raw = $('raw');
   if (!raw) return;
 
+  /* ---------- Languages ----------
+     DEFAULT_LANG = language shown on the first visit. The visitor's choice (button EN/RO in the top bar)
+     is remembered in the browser. To add a language, copy one block below and translate the values;
+     the language button then cycles through all of them. */
+  var DEFAULT_LANG = 'en';
+  var LANGS = {
+    en: {
+      name: 'English', code: 'EN', locale: 'en',
+      col_name: 'Name', col_date: 'Modified', col_size: 'Size', col_desc: 'Description',
+      search: 'Search in this folder…', path: 'Path', root: 'Root', lang_label: 'Language',
+      view_list: 'List view', view_grid: 'Grid view',
+      theme_auto: 'Theme: automatic (system)', theme_light: 'Theme: light', theme_dark: 'Theme: dark',
+      folder: 'Folder', folder1: 'folder', folderN: 'folders', file1: 'file', fileN: 'files',
+      empty_none: 'Nothing matches “{q}”.', empty_folder: 'This folder is empty.',
+      plural: function (n, one, many) { return n + ' ' + (n === 1 ? one : many); }
+    },
+    ro: {
+      name: 'Română', code: 'RO', locale: 'ro',
+      col_name: 'Nume', col_date: 'Modificat', col_size: 'Mărime', col_desc: 'Descriere',
+      search: 'Caută în acest folder…', path: 'Cale', root: 'Rădăcină', lang_label: 'Limbă',
+      view_list: 'Vizualizare listă', view_grid: 'Vizualizare grilă',
+      theme_auto: 'Temă: automată (sistem)', theme_light: 'Temă: luminoasă', theme_dark: 'Temă: întunecată',
+      folder: 'Folder', folder1: 'folder', folderN: 'foldere', file1: 'fișier', fileN: 'fișiere',
+      empty_none: 'Nimic nu se potrivește cu „{q}”.', empty_folder: 'Folderul este gol.',
+      plural: function (n, one, many) { return n + ' ' + (n === 1 ? one : (n !== 0 && (n % 100 === 0 || n % 100 > 19) ? 'de ' : '') + many); }
+    }
+  };
+  var lang = LANGS[DEFAULT_LANG] ? DEFAULT_LANG : 'en';
+  try { var savedLang = localStorage.getItem('idx-lang'); if (savedLang && LANGS[savedLang]) lang = savedLang; } catch (e) {}
+  var T = function (k) { return LANGS[lang][k]; };
+
   /* ---------- Iconuri (SVG inline) ---------- */
   var FILE = '<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/>';
   var ICONS = {
@@ -148,28 +179,27 @@
   /* ---------- Titlu, breadcrumbs, statistici ---------- */
   var segs = path.split('/').filter(Boolean);
   var here = segs.length ? dec(segs[segs.length - 1]) : location.host;
-  document.title = here + ' — Index of ' + dec(path);
-  $('title').textContent = here;
-
-  var crumbs = '<a href="/" title="Rădăcină"' + (segs.length ? '' : ' aria-current="page"') + '>' + svg(UI.home) + '<span>' + esc(location.host) + '</span></a>';
-  var acc = '/';
-  segs.forEach(function (s, i) {
-    acc += s + '/';
-    crumbs += '<span class="sep">' + svg(UI.chev) + '</span><a href="' + esc(acc) + '"' +
-              (i === segs.length - 1 ? ' aria-current="page"' : '') + '>' + esc(dec(s)) + '</a>';
-  });
-  $('crumbs').innerHTML = crumbs;
-
   var nDirs = items.filter(function (i) { return i.dir; }).length;
   var nFiles = items.length - nDirs;
   var total = items.reduce(function (s, i) { return s + (i.size > 0 ? i.size : 0); }, 0);
-  var plural = function (n, one, many) { return n + ' ' + (n === 1 ? one : (n !== 0 && (n % 100 === 0 || n % 100 > 19) ? 'de ' : '') + many); };
-  $('stats').textContent = plural(nDirs, 'folder', 'foldere') + ' · ' + plural(nFiles, 'fișier', 'fișiere') +
-    (nFiles ? ' · ' + fmtSize(total) : '');
 
-  /* Semnătura serverului (dacă ServerSignature On) */
-  var addr = raw.querySelector('address');
-  if (addr) $('footInfo').insertBefore(addr, $('footInfo').firstChild);   // semnătura serverului deasupra copyright-ului
+  function paintChrome() {
+    document.title = here + ' — Index of ' + dec(path);
+    $('title').textContent = here;
+
+    var crumbs = '<a href="/" title="' + esc(T('root')) + '"' + (segs.length ? '' : ' aria-current="page"') + '>' + svg(UI.home) + '<span>' + esc(location.host) + '</span></a>';
+    var acc = '/';
+    segs.forEach(function (s, i) {
+      acc += s + '/';
+      crumbs += '<span class="sep">' + svg(UI.chev) + '</span><a href="' + esc(acc) + '"' +
+                (i === segs.length - 1 ? ' aria-current="page"' : '') + '>' + esc(dec(s)) + '</a>';
+    });
+    $('crumbs').innerHTML = crumbs;
+
+    var L = LANGS[lang];
+    $('stats').textContent = L.plural(nDirs, T('folder1'), T('folderN')) + ' · ' + L.plural(nFiles, T('file1'), T('fileN')) +
+      (nFiles ? ' · ' + fmtSize(total) : '');
+  }
 
   /* ---------- Sortare & filtrare ---------- */
   var state = { key: 'name', dir: 1, q: '' };
@@ -185,7 +215,7 @@
       var r = 0;
       if (state.key === 'date') r = (a.date ? +a.date : 0) - (b.date ? +b.date : 0);
       else if (state.key === 'size') r = a.size - b.size;
-      else if (state.key === 'desc') r = collator.compare(a.dir ? 'Folder' : a.desc, b.dir ? 'Folder' : b.desc);
+      else if (state.key === 'desc') r = collator.compare(a.dir ? T('folder') : a.desc, b.dir ? T('folder') : b.desc);
       if (r === 0) r = collator.compare(a.name, b.name);
       return r * state.dir;
     });
@@ -200,7 +230,7 @@
 
   function rowHTML(it, q) {
     var label = '<span class="fname" title="' + esc(it.name) + '">' + highlight(it.name, q) + '</span>';
-    var desc = it.dir ? 'Folder' : it.desc;
+    var desc = it.dir ? T('folder') : it.desc;
     return '<a class="row" href="' + esc(it.href) + '"' + (it.dir ? '' : ' data-file') + '>' +
       '<span class="name"><span class="ico ' + it.type + '" style="--ic:var(--c-' + it.type + ')">' + svg(ICONS[it.type]) + '</span>' +
       '<span class="label">' + label + '</span></span>' +
@@ -223,7 +253,7 @@
     var empty = $('empty');
     if (!list.length) {
       empty.hidden = false;
-      empty.innerHTML = svg(UI.empty) + (q ? 'Nimic nu se potrivește cu „' + esc(state.q.trim()) + '”.' : 'Folderul este gol.');
+      empty.innerHTML = svg(UI.empty) + (q ? T('empty_none').replace('{q}', esc(state.q.trim())) : T('empty_folder'));
     } else empty.hidden = true;
 
     Array.prototype.forEach.call(document.querySelectorAll('#listHead button'), function (b) {
@@ -260,13 +290,12 @@
   var root = document.documentElement;
   var themeBtn = $('themeBtn');
   var THEMES = ['auto', 'light', 'dark'];
-  var TNAMES = { auto: 'Temă: automată (sistem)', light: 'Temă: luminoasă', dark: 'Temă: întunecată' };
   function currentTheme() { return root.getAttribute('data-theme') || 'auto'; }
   function paintTheme() {
     var t = currentTheme();
     themeBtn.innerHTML = svg(t === 'light' ? UI.sun : t === 'dark' ? UI.moon : UI.auto);
-    themeBtn.title = TNAMES[t];
-    themeBtn.setAttribute('aria-label', TNAMES[t]);
+    themeBtn.title = T('theme_' + t);
+    themeBtn.setAttribute('aria-label', T('theme_' + t));
   }
   themeBtn.addEventListener('click', function () {
     var next = THEMES[(THEMES.indexOf(currentTheme()) + 1) % THEMES.length];
@@ -281,7 +310,8 @@
   function paintView() {
     var g = root.getAttribute('data-view') === 'grid';
     viewBtn.innerHTML = svg(g ? UI.list : UI.grid);
-    viewBtn.title = g ? 'Vizualizare listă' : 'Vizualizare grilă';
+    viewBtn.title = T(g ? 'view_list' : 'view_grid');
+    viewBtn.setAttribute('aria-label', viewBtn.title);
   }
   viewBtn.addEventListener('click', function () {
     var g = root.getAttribute('data-view') === 'grid';
@@ -291,5 +321,35 @@
   });
   paintView();
 
-  render();
+  /* ---------- Limbă: butonul EN / RO din bara de sus ---------- */
+  var langBtn = $('langBtn');
+  function applyLang() {
+    root.setAttribute('lang', LANGS[lang].locale);
+    Array.prototype.forEach.call(document.querySelectorAll('[data-i18n]'), function (el) { el.textContent = T(el.getAttribute('data-i18n')); });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-i18n-placeholder]'), function (el) { el.setAttribute('placeholder', T(el.getAttribute('data-i18n-placeholder'))); });
+    Array.prototype.forEach.call(document.querySelectorAll('[data-i18n-aria-label]'), function (el) { el.setAttribute('aria-label', T(el.getAttribute('data-i18n-aria-label'))); });
+    if (langBtn) {
+      langBtn.textContent = LANGS[lang].code;
+      langBtn.title = T('lang_label') + ': ' + LANGS[lang].name;
+      langBtn.setAttribute('aria-label', langBtn.title);
+    }
+    paintChrome();
+    paintTheme();
+    paintView();
+    render();
+  }
+  if (langBtn) {
+    langBtn.addEventListener('click', function () {
+      var codes = Object.keys(LANGS);
+      lang = codes[(codes.indexOf(lang) + 1) % codes.length];
+      try { localStorage.setItem('idx-lang', lang); } catch (e) {}
+      applyLang();
+    });
+  }
+
+  /* Semnătura serverului (dacă ServerSignature On) */
+  var addr = raw.querySelector('address');
+  if (addr) $('footInfo').insertBefore(addr, $('footInfo').firstChild);   // semnătura serverului deasupra copyright-ului
+
+  applyLang();
 })();

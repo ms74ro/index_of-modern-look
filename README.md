@@ -22,13 +22,11 @@ folders where you want it.
 - Sorting by name, date, size or description; folders always come first
 - **Description** column after the size (from Apache `AddDescription`); folders simply show "Folder"
 - Light, dark or automatic (system) theme and list / grid view, both remembered in the browser
+- Interface in **English (default)** and Romanian: the **EN / RO** button in the top bar switches it and the choice is remembered. Adding a language is one block in `script.js`
 - Responsive layout (the description and date columns are hidden on narrow screens)
 - Without JavaScript the original Apache table is still shown, styled
 - Version and copyright shown discreetly in the footer, above the Apache server signature
 - Works behind a reverse proxy (all links are root-relative)
-
-> The interface texts (column titles, search placeholder…) are in Romanian. See
-> [Customizing](#customizing) to change them.
 
 ## How it works
 
@@ -188,7 +186,7 @@ only the static theme files.
 
 | What | Where |
 | --- | --- |
-| Interface texts (column titles, search placeholder, "Folder", counters) | `header.html` and `script.js` |
+| Interface language and texts (column titles, search placeholder, "Folder", counters) | `LANGS` in `script.js`. The first-visit language is `DEFAULT_LANG` (`'en'` or `'ro'`); to add a language, copy one block and translate it |
 | Colors, icon colors, maximum width (`.shell`), columns | `style.css` |
 | File types and their icons | `TYPES` and `ICONS` in `script.js` |
 | Version and copyright | `footInfo` in `footer.html` |
