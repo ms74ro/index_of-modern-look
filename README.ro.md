@@ -25,7 +25,7 @@ unde vrei.
 - Interfață în **engleză (implicit)** și română: butonul **EN / RO** din bara de sus o schimbă, iar alegerea este reținută. Adăugarea unei limbi înseamnă un bloc în `script.js`
 - Aspect adaptat la ecrane mici (coloanele Descriere și Dată se ascund pe ecrane înguste)
 - Fără JavaScript rămâne vizibil tabelul original Apache, stilizat
-- Versiunea și copyright-ul apar discret în subsol, deasupra semnăturii serverului Apache
+- Versiunea și copyright-ul apar discret în subsol
 - Funcționează în spatele unui reverse proxy (toate legăturile pornesc de la rădăcină)
 
 ## Cum funcționează

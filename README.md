@@ -25,7 +25,7 @@ folders where you want it.
 - Interface in **English (default)** and Romanian: the **EN / RO** button in the top bar switches it and the choice is remembered. Adding a language is one block in `script.js`
 - Responsive layout (the description and date columns are hidden on narrow screens)
 - Without JavaScript the original Apache table is still shown, styled
-- Version and copyright shown discreetly in the footer, above the Apache server signature
+- Version and copyright shown discreetly in the footer
 - Works behind a reverse proxy (all links are root-relative)
 
 ## How it works

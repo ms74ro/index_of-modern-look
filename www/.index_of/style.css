@@ -1,4 +1,4 @@
-/* ===== Apache "Index of" – temă modernă ===== */
+/* ===== Apache "Index of" – modern theme ===== */
 
 :root {
   --bg: #f6f7f9;
@@ -85,7 +85,7 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 
 .shell { max-width: 1440px; margin: 0 auto; padding: 20px 16px 40px; }
 
-/* --- bara de sus --- */
+/* --- top bar --- */
 .top { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 40px; }
 .crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 2px; font-size: 14px; color: var(--muted); min-width: 0; }
 .crumbs a { padding: 4px 8px; border-radius: 8px; display: inline-flex; align-items: center; gap: 6px; }
@@ -106,12 +106,12 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 .iconbtn svg { width: 18px; height: 18px; }
 .iconbtn.txt { width: auto; min-width: 38px; padding: 0 9px; font: 700 12px/1 var(--font); letter-spacing: .04em; }
 
-/* --- titlu --- */
+/* --- title --- */
 .hero { margin: 22px 4px 16px; }
 .hero h1 { margin: 0; font-size: clamp(22px, 3.2vw, 30px); line-height: 1.2; letter-spacing: -.02em; font-weight: 700; word-break: break-word; }
 .stats { margin: 6px 0 0; color: var(--muted); font-size: 14px; }
 
-/* --- căutare --- */
+/* --- search --- */
 .toolbar { margin-bottom: 14px; }
 .search {
   display: flex; align-items: center; gap: 10px; padding: 0 12px;
@@ -127,7 +127,7 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
   border-bottom-width: 2px; border-radius: 6px; color: var(--muted); background: var(--surface-2);
 }
 
-/* --- card / listă --- */
+/* --- card / list --- */
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
 
 .list-head, .row { display: grid; grid-template-columns: minmax(0, 1fr) 150px 90px minmax(160px, 300px); align-items: center; gap: 12px; padding: 0 16px; }
@@ -171,7 +171,7 @@ svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width:
 .empty { padding: 48px 16px; text-align: center; color: var(--muted); }
 .empty svg { width: 36px; height: 36px; opacity: .5; display: block; margin: 0 auto 10px; }
 
-/* --- vizualizare grilă --- */
+/* --- grid view --- */
 html[data-view="grid"] .list-head { display: none; }
 html[data-view="grid"] .list { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; padding: 12px; }
 html[data-view="grid"] .row {
@@ -195,7 +195,7 @@ html[data-view="grid"] .row .size { text-align: center; font-size: 12px; }
 .foot a:hover { text-decoration: underline; }
 .foot address { font-style: normal; display: block; }
 
-/* --- ecrane medii / mobil --- */
+/* --- medium screens / mobile --- */
 @media (max-width: 900px) {
   .list-head, .row { grid-template-columns: minmax(0, 1fr) 150px 90px; }
   .list-head button[data-sort="desc"], .row .desc { display: none; }
@@ -206,8 +206,8 @@ html[data-view="grid"] .row .size { text-align: center; font-size: 12px; }
   .ext { display: none; }
 }
 
-/* ===== Tabelul original Apache ===== */
-/* Cu JS: ascuns (îl înlocuim). Fără JS: stilizat decent. */
+/* ===== Original Apache table ===== */
+/* With JS: hidden (we replace it). Without JS: styled reasonably. */
 html.js #raw { display: none; }
 html:not(.js) .list-head, html:not(.js) .toolbar, html:not(.js) .actions { display: none; }
 #raw table { width: 100%; border-collapse: collapse; }

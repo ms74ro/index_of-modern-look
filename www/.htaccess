@@ -1,18 +1,18 @@
 # =====================================================================
-#  Listare modernă de fișiere (Apache mod_autoindex)
-#  Pune acest bloc în .htaccess-ul oricărui folder unde vrei listarea.
-#  Se moștenește automat și în subfoldere.
+#  Modern file listing (Apache mod_autoindex)
+#  Put this block in the .htaccess of any folder you want listed.
+#  It is inherited automatically by subfolders.
 # =====================================================================
 
-# Permite doar ip-urile din lista
+# Allow only the IPs in the list
 #Require ip 192.168.x.x 192.168.y.y
 
 Options +Indexes
 AddDefaultCharset UTF-8
 
-# HTMLTable            -> tabel (pe care scriptul îl transformă în listă)
-# SuppressHTMLPreamble -> header.html conține pagina completă (<html>, <head>…)
-# SuppressIcon         -> nu mai folosim iconurile vechi din /icons/
+# HTMLTable            -> table (which the script turns into the list)
+# SuppressHTMLPreamble -> header.html already contains the full page (<html>, <head>…)
+# SuppressIcon         -> the old icons from /icons/ are not used any more
 IndexOptions FancyIndexing HTMLTable SuppressHTMLPreamble SuppressIcon FoldersFirst NameWidth=* DescriptionWidth=* VersionSort IgnoreCase Charset=UTF-8
 
 # HEADER FILE
@@ -20,15 +20,14 @@ HeaderName /.index_of/header.html
 # FOOTER FILE
 ReadmeName /.index_of/footer.html
 
-# Ascunde fișierele tehnice din listă
+# Hide technical files from the listing
 IndexIgnore .index_of .htaccess .htpasswd .ht* .git .DS_Store Thumbs.db desktop.ini
 
 # =====================================================================
-#  Descrieri fișiere
-#  ATENȚIE: Apache caută textul ORIUNDE în nume (".js" se potrivește și
-#  cu ".json"), face diferență între litere mari/mici, iar PRIMA regulă
-#  care se potrivește câștigă. De aceea extensiile lungi/specifice sunt
-#  puse înaintea celor scurte.
+#  File descriptions
+#  NOTE: Apache looks for the text ANYWHERE in the name (".js" also
+#  matches ".json"), it is case-sensitive, and the FIRST matching rule
+#  wins. That is why long/specific extensions come before short ones.
 # =====================================================================
 
 # --- Audio ---
@@ -39,7 +38,7 @@ AddDescription "Audio Format" .m4a .wav .flac .ogg .wma .opus
 # --- Video ---
 AddDescription "Video Format" .avi .mpg .mpeg .mp4 .MP4 .mkv .flv .mov .MOV .webm .wmv .ts
 
-# --- Arhive (specifice înaintea generale) ---
+# --- Archives (specific before general) ---
 AddDescription "GZIP compressed TAR archive" .tar.gz .tgz
 AddDescription "ZIP compressed archive" .zip
 AddDescription "7-Zip compressed archive" .7z
@@ -47,7 +46,7 @@ AddDescription "RAR compressed archive" .rar
 AddDescription "TAR archive" .tar
 AddDescription "GZIP compressed archive" .gz .Z
 
-# --- Imagini ---
+# --- Images ---
 AddDescription "Joint Photographic Experts Group" .jpg .jpeg .jpe .JPG .JPEG
 AddDescription "Graphic Interchange Format" .gif
 AddDescription "Portable Network Graphic" .png .PNG
@@ -73,7 +72,7 @@ AddDescription "Windows batch file" .bat .cmd
 AddDescription "Configuration file" .conf .cfg .ini
 AddDescription "mIRC Scripting Language" .mrc
 
-# --- Documente ---
+# --- Documents ---
 AddDescription "Portable Document Format" .pdf
 AddDescription "Microsoft Word document" .docx .doc
 AddDescription "Microsoft Excel document" .xlsx .xls
@@ -86,7 +85,7 @@ AddDescription "Email data" .eml .mbox
 AddDescription "Open Document Text" .odt .fodf
 AddDescription "Open Document Spreadsheet" .ods .fods
 
-# --- Diverse ---
+# --- Misc ---
 AddDescription "Windows executable file" .exe
 AddDescription "Mac OS X terminal" .term
 AddDescription "BitTorrent file" .torrent
@@ -94,4 +93,4 @@ AddDescription "Windows link" .lnk
 AddDescription "URL web shortcut" .url
 AddDescription "Virtual Network Connection link" .vnc
 
-# Folderele afișează automat „Folder” în coloana Descriere (din script.js).
+# Folders automatically show "Folder" in the Description column (from script.js).
